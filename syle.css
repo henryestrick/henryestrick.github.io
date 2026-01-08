@@ -1,3 +1,19 @@
+/* style.css */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #2c3e50;
+    --success: #28a745;
+    --danger: #dc3545;
+    --warning: #f39c12;
+    --bg: #f4f7f6;
+}
+
 :root {
     --primary: #003366; /* School Blue */
     --accent: #FFCC00; /* School Gold */
