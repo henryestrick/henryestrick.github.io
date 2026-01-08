@@ -1,22 +1,21 @@
 const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDSnZrlTsmMOUxMBVj3_2rtuFtXC88BsCTmlnCYjo2FW_1deVhXRwFEnEyCrVCKXphQg8UiJPSoRXg/pub?output=csv';
 
 let allItems = [];
-let currentType = 'Found';
+let currentView = 'Found'; // Matches the toggle button logic
 
 async function loadData() {
-    console.log("Fetching data...");
     Papa.parse(SHEET_CSV_URL, {
         download: true,
         header: true,
         skipEmptyLines: true,
         complete: (results) => {
-            console.log("Data loaded:", results.data);
+            console.log("Data loaded successfully:", results.data);
             allItems = results.data;
             renderGrid();
         },
-        error: (error) => {
-            document.getElementById('items-grid').innerHTML = 
-                `<p style="color:red;">Error loading data. Check your CSV link.</p>`;
+        error: (err) => {
+            console.error("Error loading CSV:", err);
+            document.getElementById('items-grid').innerHTML = "<p>Unable to connect to the database.</p>";
         }
     });
 }
@@ -25,62 +24,47 @@ function renderGrid() {
     const grid = document.getElementById('items-grid');
     const search = document.getElementById('search-input').value.toLowerCase();
     
-    // SMART FILTERING: This looks for columns even if names aren't perfect
+    // Filter logic based on your specific columns
     const filtered = allItems.filter(item => {
-        // Find the right columns by searching for keywords
-        const getVal = (keywords) => {
-            const key = Object.keys(item).find(k => keywords.some(kw => k.toLowerCase().includes(kw)));
-            return key ? item[key] : "";
-        };
-
-        const status = getVal(['status']).toLowerCase();
-        const type = getVal(['name']).toLowerCase();
-        const name = getVal(['location', 'title']).toLowerCase();
-        const desc = getVal(['date']).toLowerCase();
-
-        // 1. Only show if Status is 'approved' (or show all if you haven't set up status yet)
-        const isApproved = status === 'approved' || status === ''; 
-        // 2. Filter by Found vs Lost
-        const isCorrectType = type.includes(currentType.toLowerCase());
-        // 3. Search filter
-        const matchesSearch = name.includes(search) || desc.includes(search);
-
-        return isApproved && isCorrectType && matchesSearch;
+        // Exact column matches based on your request
+        const status = (item['Status'] || "").toLowerCase();
+        const itemName = (item['Item Name'] || "").toLowerCase();
+        
+        // Ensure item is approved and matches the search
+        const isApproved = status === 'approved';
+        const matchesSearch = itemName.includes(search);
+        
+        return isApproved && matchesSearch;
     });
 
     if (filtered.length === 0) {
-        grid.innerHTML = `<div class="no-results">No ${currentType} items found yet.</div>`;
+        grid.innerHTML = `<div class="no-results">No approved items found.</div>`;
         return;
     }
 
-    grid.innerHTML = filtered.map(item => {
-        // Again, find values regardless of exact column name
-        const name = item[Object.keys(item).find(k => k.toLowerCase().includes('name'))] || "Unnamed Item";
-        const loc = item[Object.keys(item).find(k => k.toLowerCase().includes('location'))] || "Unknown Location";
-        const desc = item[Object.keys(item).find(k => k.toLowerCase().includes('desc'))] || "";
-        const date = item[Object.keys(item).find(k => k.toLowerCase().includes('time'))] || "";
-
-        return `
-            <article class="item-card">
-                <span class="item-status-tag">${currentType}</span>
-                <h3>${name}</h3>
-                <p class="location"><i class="fa-solid fa-location-dot"></i> ${loc}</p>
-                <p class="desc">${desc}</p>
-                <div class="date">${date}</div>
-            </article>
-        `;
-    }).join('');
+    grid.innerHTML = filtered.map(item => `
+        <article class="item-card">
+            <span class="item-status-tag">GCHS Record</span>
+            <h3>${item['Item Name']}</h3>
+            <p class="location"><i class="fa-solid fa-location-dot"></i> ${item['Location']}</p>
+            <p class="desc">Reported on: ${item['Date']}</p>
+            
+            <div class="contact-info">
+                <a href="mailto:${item['Contact Email']}" class="contact-btn">
+                    <i class="fa-solid fa-envelope"></i> Contact Owner/Finder
+                </a>
+            </div>
+            
+            <div class="date">Logged: ${item['Timestamp']}</div>
+        </article>
+    `).join('');
 }
 
-// Button Logic
-document.getElementById('btn-show-found').onclick = () => { currentType = 'Found'; updateUI('btn-show-found'); };
-document.getElementById('btn-show-lost').onclick = () => { currentType = 'Lost'; updateUI('btn-show-lost'); };
-document.getElementById('search-input').oninput = renderGrid;
+// Search and Toggle listeners
+document.getElementById('search-input').addEventListener('input', renderGrid);
 
-function updateUI(id) {
-    document.querySelectorAll('.toggle-group button').forEach(b => b.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    renderGrid();
-}
+// Toggle logic (adjust if your sheet has a 'Type' column for Lost vs Found)
+document.getElementById('btn-show-found').onclick = () => { renderGrid(); };
+document.getElementById('btn-show-lost').onclick = () => { renderGrid(); };
 
 loadData();
