@@ -1,48 +1,205 @@
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GCHS Lost & Found | Grayslake Central</title>
+    <title>GCHS Lost & Found | Grayslake Central High School</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/2917/2917633.png">
 </head>
 <body>
 
     <header>
         <div class="container">
             <div class="brand">
-                <h1><i class="fa-solid fa-school"></i> GCHS Lost & Found</h1>
-                <p>Official portal for Grayslake Central High School students and staff.</p>
+                <h1><i class="fa-solid fa-school-flag"></i> GCHS Lost & Found</h1>
+                <p>Official lost and found portal for Grayslake Central High School students and staff.</p>
+            </div>
+            
+            <div class="header-info">
+                <div class="info-item">
+                    <i class="fa-solid fa-clock"></i>
+                    <span>Updated daily from school database</span>
+                </div>
+                <div class="info-item">
+                    <i class="fa-solid fa-shield-check"></i>
+                    <span>Secure & verified reporting</span>
+                </div>
             </div>
         </div>
     </header>
 
     <main class="container">
         
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Find Your Missing Items</h2>
+                <p>Lost something at Grayslake Central? Check our database of found items or report your lost belongings.</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span id="found-count">0</span>
+                        <small>Items Found</small>
+                    </div>
+                    <div class="stat">
+                        <span id="lost-count">0</span>
+                        <small>Items Lost</small>
+                    </div>
+                    <div class="stat">
+                        <span id="recent-count">0</span>
+                        <small>Recent Reports</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
         <section class="controls">
-            <div class="toggle-group">
-                <button id="btn-show-found" class="active">Found Items</button>
-                <button id="btn-show-lost">Lost Reports</button>
+            <div class="controls-left">
+                <div class="toggle-group">
+                    <button id="btn-show-found" class="active">
+                        <i class="fa-solid fa-hand-holding"></i>
+                        Found Items
+                    </button>
+                    <button id="btn-show-lost">
+                        <i class="fa-solid fa-question-circle"></i>
+                        Lost Reports
+                    </button>
+                </div>
+                
+                <div class="view-options">
+                    <button id="btn-list-view" class="view-btn" title="List View">
+                        <i class="fa-solid fa-list"></i>
+                    </button>
+                    <button id="btn-grid-view" class="view-btn active" title="Grid View">
+                        <i class="fa-solid fa-grid"></i>
+                    </button>
+                </div>
             </div>
             
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTKmK0SaP7cG-mcV9KjuQBXZGPMMlYVHKIGRFOoaALAjMWQw/viewform?usp=dialog" target="_blank">
-                <button class="action-btn"><i class="fa-solid fa-plus"></i> Report an Item</button>
-            </a>
+            <div class="controls-right">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTKmK0SaP7cG-mcV9KjuQBXZGPMMlYVHKIGRFOoaALAjMWQw/viewform?usp=dialog" target="_blank" class="action-link">
+                    <button class="action-btn">
+                        <i class="fa-solid fa-plus-circle"></i>
+                        Report an Item
+                    </button>
+                </a>
+                
+                <button id="btn-refresh" class="refresh-btn" title="Refresh Data">
+                    <i class="fa-solid fa-rotate"></i>
+                </button>
+            </div>
         </section>
 
         <section class="search-container">
             <div class="search-box">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="search-input" placeholder="Search by color, brand, or item type...">
+                <input type="text" id="search-input" placeholder="Search by item name, location, or type... (Press Ctrl+F)">
+                <div class="search-tools">
+                    <button id="btn-clear-search" class="clear-btn" title="Clear search">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <p class="search-hint">Try searching for "phone", "jacket", "calculator", or location like "cafeteria"</p>
+        </section>
+        
+        <section class="filters">
+            <div class="filter-group">
+                <label for="filter-location"><i class="fa-solid fa-map-marker-alt"></i> Filter by Location:</label>
+                <select id="filter-location">
+                    <option value="">All Locations</option>
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="filter-type"><i class="fa-solid fa-filter"></i> Filter by Type:</label>
+                <select id="filter-type">
+                    <option value="">All Types</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="accessories">Accessories</option>
+                    <option value="school">School Supplies</option>
+                    <option value="sports">Sports Equipment</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="filter-date"><i class="fa-solid fa-calendar"></i> Date Range:</label>
+                <select id="filter-date">
+                    <option value="all">All Time</option>
+                    <option value="today">Today</option>
+                    <option value="week">This Week</option>
+                    <option value="month">This Month</option>
+                </select>
+            </div>
+            
+            <button id="btn-clear-filters" class="clear-filters-btn">
+                <i class="fa-solid fa-broom"></i>
+                Clear Filters
+            </button>
+        </section>
+
+        <section class="results-info">
+            <div class="results-count">
+                <span id="results-count">0</span> items displayed
+            </div>
+            <div class="sort-options">
+                <label for="sort-by"><i class="fa-solid fa-sort"></i> Sort by:</label>
+                <select id="sort-by">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="name">Item Name (A-Z)</option>
+                    <option value="location">Location</option>
+                </select>
             </div>
         </section>
 
-        <section id="items-grid" class="grid">
-            <div class="loading">
-                <i class="fa-solid fa-circle-notch fa-spin"></i>
-                <p>Syncing with school database...</p>
+        <section id="items-container">
+            <div id="items-grid" class="grid">
+                <div class="loading">
+                    <i class="fa-solid fa-circle-notch fa-spin"></i>
+                    <p>Loading lost and found items from school database...</p>
+                    <p class="loading-sub">This may take a few moments</p>
+                </div>
+            </div>
+            
+            <div id="items-list" class="list-view hidden">
+                <!-- List view will be generated by JavaScript -->
+            </div>
+        </section>
+        
+        <section class="pagination hidden">
+            <button id="btn-prev" class="page-btn" disabled>
+                <i class="fa-solid fa-chevron-left"></i> Previous
+            </button>
+            <div class="page-numbers">
+                <span id="page-info">Page 1 of 1</span>
+            </div>
+            <button id="btn-next" class="page-btn" disabled>
+                Next <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </section>
+        
+        <section class="instructions">
+            <div class="instruction-card">
+                <i class="fa-solid fa-search"></i>
+                <h3>Looking for Something?</h3>
+                <p>Check the "Found Items" tab regularly. Use the search box to filter by item name, location, or type.</p>
+            </div>
+            
+            <div class="instruction-card">
+                <i class="fa-solid fa-bell"></i>
+                <h3>Lost an Item?</h3>
+                <p>Report it immediately using the "Report an Item" button. Include detailed description and location.</p>
+            </div>
+            
+            <div class="instruction-card">
+                <i class="fa-solid fa-envelope"></i>
+                <h3>Found Your Item?</h3>
+                <p>Click "Contact Reporter" to email the person who found your item and arrange pickup.</p>
             </div>
         </section>
 
@@ -50,9 +207,58 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 Grayslake Central High School. <br> Items not claimed within 30 days may be donated.</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fa-solid fa-school"></i> GCHS Lost & Found</h3>
+                    <p>Official lost and found system for Grayslake Central High School.</p>
+                    <p class="footer-note">Items are stored in the main office for 30 days before donation.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <p><i class="fa-solid fa-location-dot"></i> Main Office: Room 101</p>
+                    <p><i class="fa-solid fa-clock"></i> Hours: 7:30 AM - 3:30 PM</p>
+                    <p><i class="fa-solid fa-phone"></i> Phone: (847) 986-3300</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTKmK0SaP7cG-mcV9KjuQBXZGPMMlYVHKIGRFOoaALAjMWQw/viewform?usp=dialog" target="_blank" class="footer-link">
+                        <i class="fa-solid fa-plus"></i> Report Lost Item
+                    </a>
+                    <a href="#" class="footer-link" id="view-map">
+                        <i class="fa-solid fa-map"></i> Campus Map
+                    </a>
+                    <a href="#" class="footer-link" id="school-website">
+                        <i class="fa-solid fa-globe"></i> GCHS Website
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Grayslake Central High School. All rights reserved.</p>
+                <p>Items not claimed within 30 days may be donated to local charities.</p>
+                <p class="disclaimer">This system is updated daily. For urgent inquiries, please visit the main office.</p>
+            </div>
         </div>
     </footer>
+
+    <!-- Modal for Map View -->
+    <div id="map-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-map-location-dot"></i> GCHS Campus Map</h3>
+                <button id="close-modal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="map-placeholder">
+                    <i class="fa-solid fa-map"></i>
+                    <p>Interactive campus map would appear here</p>
+                    <p class="map-note">Common lost & found locations: Cafeteria, Library, Gym, Main Office</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="script.js"></script>
