@@ -1,68 +1,63 @@
-// script.js (Main Public Page)
 
-// 1. Load Approved Items (Read Only)
-function loadItems(filterType = 'found', searchQuery = '') {
-    const grid = document.getElementById('items-grid');
-    grid.innerHTML = '<p>Loading...</p>';
 
-    // Only get items that the admin has approved
-    let query = db.collection('items').where('approved', '==', true);
+function loadPendingItems() {
+    const list = document.getElementById('pending-list');
+    const pendingCountEl = document.getElementById('count-pending');
+    const approvedCountEl = document.getElementById('count-approved');
+    const logoutBtn = document.getElementById('logout-btn');
 
-    if (filterType !== 'all') {
-        query = query.where('type', '==', filterType);
-    }
+    // Show the logout button now that we are logged in
+    if(logoutBtn) logoutBtn.style.display = 'block';
 
-    query.get().then((snapshot) => {
-        grid.innerHTML = '';
-        if (snapshot.empty) {
-            grid.innerHTML = '<p>No items found.</p>';
-            return;
-        }
+    // 1. LIVE STATS: Count Pending Items
+    db.collection('items').where('status', '==', 'pending')
+      .onSnapshot(snapshot => {
+          pendingCountEl.innerText = snapshot.size;
+          
+          // Update the list view
+          let html = '';
+          if (snapshot.empty) {
+              html = '<div style="text-align:center; padding:20px;">No pending items to review. You\'re all caught up!</div>';
+          } else {
+              snapshot.forEach(doc => {
+                  const item = doc.data();
+                  html += `
+                    <div class="pending-item" id="item-${doc.id}">
+                        <div style="display:flex; justify-content:space-between;">
+                            <h3>${item.title} <span style="font-size:0.8rem; color:#666;">(${item.type})</span></h3>
+                            <span style="color:var(--warning); font-weight:bold;">PENDING</span>
+                        </div>
+                        <p>${item.description}</p>
+                        <small><i class="fa-solid fa-user"></i> ${item.userEmail} | <i class="fa-solid fa-calendar"></i> ${item.date}</small>
+                        <div class="item-actions">
+                            <button class="btn btn-approve" onclick="updateStatus('${doc.id}', 'approved')">
+                                <i class="fa-solid fa-check"></i> Approve
+                            </button>
+                            <button class="btn btn-deny" onclick="updateStatus('${doc.id}', 'denied')">
+                                <i class="fa-solid fa-xmark"></i> Deny
+                            </button>
+                        </div>
+                    </div>
+                  `;
+              });
+          }
+          list.innerHTML = html;
+      });
 
-        snapshot.forEach((doc) => {
-            const item = doc.data();
-            // Basic client-side search filtering
-            if (searchQuery && 
-               !item.name.toLowerCase().includes(searchQuery.toLowerCase()) && 
-               !item.location.toLowerCase().includes(searchQuery.toLowerCase())) {
-                return;
-            }
-
-            const card = document.createElement('div');
-            card.className = `card ${item.type}`;
-            card.innerHTML = `
-                <span class="tag ${item.type}">${item.type.toUpperCase()}</span>
-                <h3>${item.name}</h3>
-                <small><i class="fa-regular fa-calendar"></i> ${item.date}</small>
-                <p><strong>Location:</strong> ${item.location}</p>
-                <p><strong>Contact:</strong> ${item.contact}</p>
-            `;
-            grid.appendChild(card);
-        });
-    });
+    // 2. LIVE STATS: Count Approved Items
+    db.collection('items').where('status', '==', 'approved')
+      .onSnapshot(snapshot => {
+          approvedCountEl.innerText = snapshot.size;
+      });
 }
 
-// 2. Submit New Report
-document.getElementById('report-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    db.collection('items').add({
-        type: document.getElementById('type').value,
-        name: document.getElementById('itemName').value,
-        location: document.getElementById('location').value,
-        date: document.getElementById('date').value,
-        contact: document.getElementById('contact').value,
-        approved: false, // DEFAULT IS FALSE
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(() => {
-        document.getElementById('report-modal').style.display = "none";
-        document.getElementById('report-form').reset();
-        alert("Report submitted! It will appear once an admin approves it.");
-    }).catch((error) => {
-        console.error("Error:", error);
-        alert("Something went wrong.");
-    });
-});
-
-// Initial Load
-loadItems('found');
+// Update Status Function
+window.updateStatus = (id, newStatus) => {
+    const confirmMsg = newStatus === 'approved' ? "Approve this item for public view?" : "Are you sure you want to deny/delete this item?";
+    
+    if(confirm(confirmMsg)) {
+        db.collection('items').doc(id).update({
+            status: newStatus
+        }).catch(err => alert("Error: " + err.message));
+    }
+};
