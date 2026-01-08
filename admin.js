@@ -1,4 +1,11 @@
-
+// Test if variables are alive
+setTimeout(() => {
+    if (typeof auth !== 'undefined' && typeof db !== 'undefined') {
+        console.log("✅ SUCCESS: auth and db variables are loaded!");
+    } else {
+        console.error("❌ ERROR: auth or db is missing. Check your script order in HTML.");
+    }
+}, 1000);
 
 function loadPendingItems() {
     const list = document.getElementById('pending-list');
