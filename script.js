@@ -1,4 +1,4 @@
-// PASTE YOUR PUBLISHED GOOGLE SHEET CSV LINK HERE
+
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDSnZrlTsmMOUxMBVj3_2rtuFtXC88BsCTmlnCYjo2FW_1deVhXRwFEnEyCrVCKXphQg8UiJPSoRXg/pub?output=csv';
 
 const grid = document.getElementById('items-grid');
@@ -17,8 +17,6 @@ function loadData() {
         complete: function(results) {
             // Process the raw data
             allItems = results.data.map((row, index) => {
-                // Map your Google Sheet headers to our internal names
-                // Adjust strings inside row['...'] to match your actual Google Form Question titles exactly
                 return {
                     id: index,
                     timestamp: row['Timestamp'],
