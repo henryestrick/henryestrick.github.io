@@ -3,36 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GCHS Lost & Found</title>
+    <title>GCHS Lost & Found | Grayslake Central</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <div class="container header-content">
+        <div class="container">
             <div class="brand">
                 <h1><i class="fa-solid fa-school"></i> GCHS Lost & Found</h1>
-                <p>Grayslake Central High School: Report or find items.</p>
+                <p>Official portal for Grayslake Central High School students and staff.</p>
             </div>
         </div>
     </header>
 
-    <div class="container controls">
-        <div class="toggle-group">
-            <button id="btn-show-found" class="active">View Found Items</button>
-            <button id="btn-show-lost">View Lost Reports</button>
-        </div>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTKmK0SaP7cG-mcV9KjuQBXZGPMMlYVHKIGRFOoaALAjMWQw/viewform?usp=dialog" target="_blank" class="action-btn-link">
-            <button class="action-btn"><i class="fa-solid fa-plus"></i> Report Item</button>
-        </a>
-    </div>
-
-    <div class="container search-container">
-        <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="search-input" placeholder="Search for items (e.g. 'blue water bottle')...">
-        </div>
-    </div>
-
     <main class="container">
+        
+        <section class="controls">
+            <div class="toggle-group">
+                <button id="btn-show-found" class="active">Found Items</button>
+                <button id="btn-show-lost">Lost Reports</button>
+            </div>
+            
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTKmK0SaP7cG-mcV9KjuQBXZGPMMlYVHKIGRFOoaALAjMWQw/viewform?usp=dialog" target="_blank">
+                <button class="action-btn"><i class="fa-solid fa-plus"></i> Report an Item</button>
+            </a>
+        </section>
+
+        <section class="search-container">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="search-input" placeholder="Search by color, brand, or item type...">
+            </div>
+        </section>
+
+        <section id="items-grid" class="grid">
+            <div class="loading">
+                <i class="fa-solid fa-circle-notch fa-spin"></i>
+                <p>Syncing with school database...</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Grayslake Central High School. <br> Items not claimed within 30 days may be donated.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
