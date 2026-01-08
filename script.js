@@ -1,67 +1,67 @@
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDSnZrlTsmMOUxMBVj3_2rtuFtXC88BsCTmlnCYjo2FW_1deVhXRwFEnEyCrVCKXphQg8UiJPSoRXg/pubhtml';
 
-const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDSnZrlTsmMOUxMBVj3_2rtuFtXC88BsCTmlnCYjo2FW_1deVhXRwFEnEyCrVCKXphQg8UiJPSoRXg/pub?output=csv';
+let allItems = [];
+let currentType = 'Found'; // Matches the 'Found Items' button
 
-let allItems = []; // To store data for searching/filtering
-let currentView = 'Found'; // Default view
-
-async function init() {
+async function loadData() {
     Papa.parse(SHEET_CSV_URL, {
         download: true,
         header: true,
         complete: (results) => {
             allItems = results.data;
-            renderItems();
+            renderGrid();
         }
     });
 }
 
-function renderItems() {
+function renderGrid() {
     const grid = document.getElementById('items-grid');
-    const searchTerm = document.getElementById('search-input').value.toLowerCase();
+    const search = document.getElementById('search-input').value.toLowerCase();
     
-    // Filter by View (Lost vs Found), Search, and APPROVAL status
     const filtered = allItems.filter(item => {
-        const matchesType = item['Type'] === currentView;
-        const isApproved = item['Status'] === 'approved';
-        const matchesSearch = item['Item Name'].toLowerCase().includes(searchTerm) || 
-                              item['Description'].toLowerCase().includes(searchTerm);
+        // Ensure these column names match your Google Sheet exactly!
+        const isApproved = item.Status === 'approved';
+        const isCorrectType = item.Type === currentType;
+        const matchesSearch = item['Item Name'].toLowerCase().includes(search) || 
+                              item.Description.toLowerCase().includes(search);
         
-        return matchesType && isApproved && matchesSearch;
+        return isApproved && isCorrectType && matchesSearch;
     });
 
     if (filtered.length === 0) {
-        grid.innerHTML = `<div class="no-results">No ${currentView} items found.</div>`;
+        grid.innerHTML = `<div class="no-results">No ${currentType.toLowerCase()} items found matching your search.</div>`;
         return;
     }
 
     grid.innerHTML = filtered.map(item => `
-        <div class="item-card">
-            <div class="item-status-tag">${item['Type']}</div>
+        <article class="item-card">
+            <span class="item-status-tag">${item.Type}</span>
             <h3>${item['Item Name']}</h3>
             <p class="location"><i class="fa-solid fa-location-dot"></i> ${item['Location Found/Lost']}</p>
-            <p class="desc">${item['Description']}</p>
-            <div class="date">${item['Timestamp']}</div>
-        </div>
+            <p class="desc">${item.Description}</p>
+            <div class="date">Reported on: ${item.Timestamp}</div>
+        </article>
     `).join('');
 }
 
-// Event Listeners for Buttons
-document.getElementById('btn-show-found').addEventListener('click', (e) => {
-    currentView = 'Found';
-    updateButtons(e.target);
+// Control listeners
+document.getElementById('btn-show-found').addEventListener('click', () => {
+    currentType = 'Found';
+    toggleButtons('btn-show-found');
 });
 
-document.getElementById('btn-show-lost').addEventListener('click', (e) => {
-    currentView = 'Lost';
-    updateButtons(e.target);
+document.getElementById('btn-show-lost').addEventListener('click', () => {
+    currentType = 'Lost';
+    toggleButtons('btn-show-lost');
 });
 
-document.getElementById('search-input').addEventListener('input', renderItems);
+document.getElementById('search-input').addEventListener('input', renderGrid);
 
-function updateButtons(activeBtn) {
-    document.querySelectorAll('.controls button').forEach(btn => btn.classList.remove('active'));
-    activeBtn.classList.add('active');
-    renderItems();
+function toggleButtons(id) {
+    document.getElementById('btn-show-found').classList.remove('active');
+    document.getElementById('btn-show-lost').classList.remove('active');
+    document.getElementById(id).classList.add('active');
+    renderGrid();
 }
 
-init();
+loadData();
