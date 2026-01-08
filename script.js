@@ -1,5 +1,5 @@
-// Replace this with your "Publish to Web" CSV link
-const SHEET_CSV_URL = 'PASTE_YOUR_PUBLISHED_CSV_HERE';
+
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDSnZrlTsmMOUxMBVj3_2rtuFtXC88BsCTmlnCYjo2FW_1deVhXRwFEnEyCrVCKXphQg8UiJPSoRXg/pub?output=csv';
 
 let allItems = []; // To store data for searching/filtering
 let currentView = 'Found'; // Default view
