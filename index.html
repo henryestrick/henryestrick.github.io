@@ -4,48 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GCHS Lost & Found</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <div class="container">
-            <h1><i class="fa-solid fa-school"></i> Grayslake Central High School Lost & Found</h1>
-            <p>Report lost items or check what has been found.</p>
+        <div class="container header-content">
+            <div class="brand">
+                <h1><i class="fa-solid fa-school"></i> GCHS Lost & Found</h1>
+                <p>Helping Grayslake Central students find what's theirs.</p>
+            </div>
+            <a href="admin.html" class="admin-link-btn"><i class="fa-solid fa-user-shield"></i> Admin Portal</a>
         </div>
     </header>
 
     <div class="container controls">
-        <button id="btn-show-found" class="active">View Found Items</button>
-        <button id="btn-show-lost">View Lost Reports</button>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTKmK0SaP7cG-mcV9KjuQBXZGPMMlYVHKIGRFOoaALAjMWQw/viewform?usp=dialog" target="_blank" class="button-link">
-            <button class="action-btn">+ Report Item</button>
+        <div class="toggle-group">
+            <button id="btn-show-found" class="active">View Found Items</button>
+            <button id="btn-show-lost">View Lost Reports</button>
+        </div>
+        <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform" target="_blank" class="action-btn-link">
+            <button class="action-btn"><i class="fa-solid fa-plus"></i> Report Item</button>
         </a>
     </div>
 
     <div class="container search-container">
-        <input type="text" id="search-input" placeholder="Search items...">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="search-input" placeholder="Search by color, brand, or location...">
     </div>
 
-    <div class="container">
+    <main class="container">
         <div id="items-grid" class="grid">
-            <p>Loading items...</p>
+            <div class="loading">
+                <i class="fa-solid fa-circle-notch fa-spin"></i>
+                <p>Loading items from school database...</p>
+            </div>
         </div>
-    </div>
+    </main>
 
     <footer>
-        <p>&copy; Grayslake Central High School.</p>
+        <div class="container">
+            <p>&copy; 2026 Grayslake Central High School. Go Rams!</p>
+        </div>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
-<header>
-    <div class="container header-content">
-        <div>
-        </div>
-        <a href="admin.html" class="admin-link-btn"><i class="fa-solid fa-user-shield"></i> Admin Login</a>
-    </div>
-</header>
