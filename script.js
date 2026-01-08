@@ -34,9 +34,9 @@ function renderGrid() {
         };
 
         const status = getVal(['status']).toLowerCase();
-        const type = getVal(['type']).toLowerCase();
-        const name = getVal(['name', 'title']).toLowerCase();
-        const desc = getVal(['description', 'details']).toLowerCase();
+        const type = getVal(['name']).toLowerCase();
+        const name = getVal(['location', 'title']).toLowerCase();
+        const desc = getVal(['date']).toLowerCase();
 
         // 1. Only show if Status is 'approved' (or show all if you haven't set up status yet)
         const isApproved = status === 'approved' || status === ''; 
