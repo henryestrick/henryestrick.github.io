@@ -2,7 +2,7 @@
 const CONFIG = {
     // Google Sheet CSV URL (PUBLISH TO WEB AS CSV and paste the URL here)
     // Instructions: Open your Google Sheet -> File -> Share -> Publish to web -> CSV -> Copy URL
-    GOOGLE_SHEET_CSV_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ.../pub?output=csv',
+    GOOGLE_SHEET_CSV_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDSnZrlTsmMOUxMBVj3_2rtuFtXC88BsCTmlnCYjo2FW_1deVhXRwFEnEyCrVCKXphQg8UiJPSoRXg/pub?output=csv',
     
     // Column mapping from Google Sheet to display fields
     // Updated to match your Google Form response columns
