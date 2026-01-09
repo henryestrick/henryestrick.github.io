@@ -1,110 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GCHS Lost & Found | Grayslake Central High School</title>
+    <title>GCHS Lost & Found</title>
+    
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* Basic reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
+        /* School colors */
         :root {
-            --primary-color: #277445;
-            --secondary-color: #ffffff;
-            --accent-color: #3a9d5e;
+            --school-green: #277445;
+            --school-white: #ffffff;
+            --light-green: #3a9d5e;
             --light-gray: #f8f9fa;
             --medium-gray: #e9ecef;
             --dark-gray: #333333;
-            --text-color: #2d3748;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --border-radius: 8px;
-            --transition: all 0.3s ease;
         }
-
+        
         body {
             font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
             background-color: #f9fafb;
+            color: #333;
+            line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
-
+        
+        /* Container for centering content */
         .container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-
+        
+        /* Header styles */
         header {
-            background: linear-gradient(135deg, var(--primary-color), #1e5c38);
-            color: var(--secondary-color);
-            padding: 2rem 0;
+            background-color: var(--school-green);
+            color: var(--school-white);
+            padding: 30px 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
         }
-
-        header::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-color), #4db470);
-        }
-
-        .brand h1 {
+        
+        .header-content h1 {
             font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 12px;
         }
-
-        .brand h1 i {
-            color: var(--secondary-color);
+        
+        .header-content h1 i {
+            color: var(--school-white);
             font-size: 2.5rem;
+            margin-right: 15px;
         }
-
-        .brand p {
+        
+        .header-content p {
             font-size: 1.1rem;
             opacity: 0.9;
-            font-weight: 300;
         }
-
+        
+        /* Main content area */
         main {
             flex: 1;
-            padding: 2rem 0 4rem;
+            padding: 30px 0 60px;
         }
-
-        .controls {
+        
+        /* Button styles */
+        .button-group {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 30px;
             flex-wrap: wrap;
-            gap: 1.5rem;
+            gap: 20px;
         }
-
-        .toggle-group {
+        
+        .tab-buttons {
             display: flex;
             background-color: var(--light-gray);
-            border-radius: var(--border-radius);
-            padding: 4px;
-            box-shadow: var(--shadow);
+            border-radius: 8px;
+            padding: 5px;
         }
-
-        .toggle-group button {
+        
+        .tab-button {
             padding: 12px 24px;
             border: none;
             background: transparent;
@@ -112,144 +104,137 @@
             font-size: 1rem;
             border-radius: 6px;
             cursor: pointer;
-            transition: var(--transition);
             color: var(--dark-gray);
+            transition: all 0.3s ease;
         }
-
-        .toggle-group button.active {
-            background-color: var(--secondary-color);
-            color: var(--primary-color);
+        
+        .tab-button.active {
+            background-color: var(--school-white);
+            color: var(--school-green);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-
-        .toggle-group button:hover:not(.active) {
+        
+        .tab-button:hover:not(.active) {
             background-color: rgba(255, 255, 255, 0.7);
         }
-
-        .action-btn {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
+        
+        .report-button {
+            background-color: var(--school-green);
+            color: var(--school-white);
             border: none;
             padding: 14px 28px;
-            border-radius: var(--border-radius);
+            border-radius: 8px;
             font-weight: 600;
             font-size: 1rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 10px;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
-
-        .action-btn:hover {
+        
+        .report-button:hover {
             background-color: #1e5c38;
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(39, 116, 69, 0.25);
         }
-
-        .action-btn i {
-            font-size: 1.1rem;
-        }
-
+        
+        /* Search box */
         .search-container {
-            margin-bottom: 2.5rem;
+            margin-bottom: 30px;
         }
-
+        
         .search-box {
             position: relative;
             max-width: 600px;
         }
-
+        
         .search-box i {
             position: absolute;
             left: 20px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--primary-color);
+            color: var(--school-green);
             font-size: 1.2rem;
         }
-
+        
         .search-box input {
             width: 100%;
             padding: 18px 20px 18px 52px;
             border: 2px solid var(--medium-gray);
-            border-radius: var(--border-radius);
+            border-radius: 8px;
             font-size: 1.1rem;
-            transition: var(--transition);
-            background-color: var(--secondary-color);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            background-color: var(--school-white);
         }
-
+        
         .search-box input:focus {
             outline: none;
-            border-color: var(--primary-color);
+            border-color: var(--school-green);
             box-shadow: 0 4px 12px rgba(39, 116, 69, 0.15);
         }
-
-        .grid {
+        
+        /* Items grid */
+        .items-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            gap: 25px;
+            margin-bottom: 40px;
         }
-
+        
+        /* Item card */
         .item-card {
-            background-color: var(--secondary-color);
-            border-radius: var(--border-radius);
+            background-color: var(--school-white);
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
             border: 1px solid var(--medium-gray);
         }
-
+        
         .item-card:hover {
             transform: translateY(-6px);
             box-shadow: 0 12px 24px rgba(39, 116, 69, 0.12);
-            border-color: var(--primary-color);
+            border-color: var(--school-green);
         }
-
+        
         .item-image {
             height: 200px;
             background: linear-gradient(135deg, #f0f7f2, #e8f4ec);
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            position: relative;
         }
-
-        .default-image {
+        
+        .item-image i {
             font-size: 4rem;
-            color: var(--primary-color);
+            color: var(--school-green);
             opacity: 0.3;
         }
-
+        
         .item-content {
-            padding: 1.5rem;
-            flex: 1;
+            padding: 20px;
             display: flex;
             flex-direction: column;
+            height: calc(100% - 200px);
         }
-
+        
         .item-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 1rem;
+            margin-bottom: 15px;
         }
-
+        
         .item-title {
             font-size: 1.3rem;
             font-weight: 700;
-            color: var(--primary-color);
+            color: var(--school-green);
             margin-right: 10px;
         }
-
-        .item-type {
+        
+        .item-status {
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.85rem;
@@ -258,171 +243,64 @@
             letter-spacing: 0.5px;
             white-space: nowrap;
         }
-
-        .type-found {
+        
+        .status-found {
             background-color: rgba(39, 116, 69, 0.1);
-            color: var(--primary-color);
+            color: var(--school-green);
             border: 1px solid rgba(39, 116, 69, 0.2);
         }
-
-        .type-lost {
+        
+        .status-lost {
             background-color: rgba(255, 193, 7, 0.1);
             color: #856404;
             border: 1px solid rgba(255, 193, 7, 0.2);
         }
-
+        
         .item-details {
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
             flex: 1;
         }
-
+        
         .detail-row {
             display: flex;
-            margin-bottom: 0.75rem;
+            margin-bottom: 12px;
             align-items: flex-start;
         }
-
+        
         .detail-row i {
             width: 24px;
-            color: var(--primary-color);
+            color: var(--school-green);
             margin-right: 10px;
-            margin-top: 2px;
-            text-align: center;
+            margin-top: 3px;
         }
-
+        
         .detail-row span {
             flex: 1;
         }
-
+        
         .item-date {
             font-size: 0.9rem;
             color: #666;
             margin-top: auto;
-            padding-top: 1rem;
+            padding-top: 15px;
             border-top: 1px solid var(--medium-gray);
             display: flex;
             align-items: center;
         }
-
+        
         .item-date i {
             margin-right: 8px;
             color: #666;
         }
-
-        .loading {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 4rem 0;
-        }
-
-        .loading i {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .loading p {
-            font-size: 1.2rem;
-            color: var(--dark-gray);
-        }
-
-        .empty-state {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 4rem 0;
-            color: #666;
-        }
-
-        .empty-state i {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            color: var(--medium-gray);
-        }
-
-        .empty-state h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--dark-gray);
-        }
-
-        footer {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
-            padding: 2.5rem 0;
-            text-align: center;
-            margin-top: auto;
-        }
-
-        footer p {
-            opacity: 0.9;
-            line-height: 1.8;
-        }
-
-        footer .container {
-            max-width: 800px;
-        }
-
-        @media (max-width: 768px) {
-            .controls {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .toggle-group {
-                align-self: center;
-            }
-            
-            .brand h1 {
-                font-size: 1.8rem;
-            }
-            
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-                gap: 1.5rem;
-            }
-            
-            .item-content {
-                padding: 1.25rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .brand h1 {
-                font-size: 1.5rem;
-            }
-            
-            .brand p {
-                font-size: 1rem;
-            }
-            
-            .toggle-group {
-                width: 100%;
-            }
-            
-            .toggle-group button {
-                flex: 1;
-                padding: 10px 16px;
-            }
-            
-            .grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .item-actions {
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-            padding-top: 1rem;
-            border-top: 1px dashed var(--medium-gray);
-        }
-
-        .contact-btn {
+        
+        /* Contact button */
+        .contact-button {
             width: 100%;
             padding: 12px;
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
+            background-color: var(--school-green);
+            color: var(--school-white);
             border: none;
-            border-radius: var(--border-radius);
+            border-radius: 8px;
             font-weight: 600;
             font-size: 1rem;
             cursor: pointer;
@@ -430,97 +308,197 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: var(--transition);
+            margin-top: 15px;
+            transition: all 0.3s ease;
         }
-
-        .contact-btn:hover {
+        
+        .contact-button:hover {
             background-color: #1e5c38;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(39, 116, 69, 0.25);
         }
-
-        .contact-btn.disabled {
+        
+        .contact-button.disabled {
             background-color: var(--medium-gray);
             color: #666;
             cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
         }
-
-        .contact-btn.disabled:hover {
+        
+        .contact-button.disabled:hover {
             background-color: var(--medium-gray);
             transform: none;
-            box-shadow: none;
         }
-
+        
+        /* Loading and empty states */
+        .loading-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 0;
+        }
+        
+        .loading-state i {
+            font-size: 3rem;
+            color: var(--school-green);
+            margin-bottom: 20px;
+        }
+        
+        .loading-state p {
+            font-size: 1.2rem;
+            color: var(--dark-gray);
+        }
+        
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 0;
+            color: #666;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--medium-gray);
+        }
+        
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark-gray);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--school-green);
+            color: var(--school-white);
+            padding: 30px 0;
+            text-align: center;
+            margin-top: auto;
+        }
+        
+        footer p {
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+        
         .school-badge {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin-top: 1rem;
+            margin-top: 15px;
             opacity: 0.8;
         }
-
+        
         .school-badge i {
-            color: var(--secondary-color);
+            color: var(--school-white);
         }
-
-        .results-counter {
+        
+        /* Count display */
+        .count-display {
             background-color: rgba(39, 116, 69, 0.1);
-            border-left: 4px solid var(--primary-color);
+            border-left: 4px solid var(--school-green);
             padding: 12px 20px;
             margin-bottom: 20px;
-            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            border-radius: 0 8px 8px 0;
             font-weight: 600;
-            color: var(--primary-color);
+            color: var(--school-green);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .button-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .tab-buttons {
+                align-self: center;
+            }
+            
+            .header-content h1 {
+                font-size: 1.8rem;
+            }
+            
+            .items-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-content h1 {
+                font-size: 1.5rem;
+            }
+            
+            .header-content p {
+                font-size: 1rem;
+            }
+            
+            .tab-buttons {
+                width: 100%;
+            }
+            
+            .tab-button {
+                flex: 1;
+                padding: 10px 16px;
+            }
+            
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-
+    <!-- Header section -->
     <header>
         <div class="container">
-            <div class="brand">
+            <div class="header-content">
                 <h1><i class="fa-solid fa-school"></i> GCHS Lost & Found</h1>
                 <p>Official portal for Grayslake Central High School students and staff.</p>
             </div>
         </div>
     </header>
-
+    
+    <!-- Main content -->
     <main class="container">
-        
-        <div id="results-counter" class="results-counter" style="display: none;">
+        <!-- Results counter -->
+        <div id="results-counter" class="count-display" style="display: none;">
             <span id="results-count">0</span> items found
         </div>
-
-        <section class="controls">
-            <div class="toggle-group">
-                <button id="btn-show-found" class="active">Found Items</button>
-                <button id="btn-show-lost">Lost Reports</button>
+        
+        <!-- Button controls -->
+        <section class="button-group">
+            <div class="tab-buttons">
+                <button id="found-button" class="tab-button active">Found Items</button>
+                <button id="lost-button" class="tab-button">Lost Reports</button>
             </div>
             
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTKmK0SaP7cG-mcV9KjuQBXZGPMMlYVHKIGRFOoaALAjMWQw/viewform?usp=dialog" target="_blank">
-                <button class="action-btn"><i class="fa-solid fa-plus"></i> Report an Item</button>
+            <!-- Report button links to Google Form -->
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTKmK0SaP7cG-mcV9KjuQBXZGPMMlYVHKIGRFOoaALAjMWQw/viewform" target="_blank">
+                <button class="report-button">
+                    <i class="fa-solid fa-plus"></i> Report an Item
+                </button>
             </a>
         </section>
-
+        
+        <!-- Search box -->
         <section class="search-container">
             <div class="search-box">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="search-input" placeholder="Search by item name, location, or type...">
+                <input type="text" id="search-box" placeholder="Search by item name, location, or type...">
             </div>
         </section>
-
-        <section id="items-grid" class="grid">
-            <div class="loading">
+        
+        <!-- Items will appear here -->
+        <section id="items-container" class="items-grid">
+            <div class="loading-state">
                 <i class="fa-solid fa-circle-notch fa-spin"></i>
                 <p>Loading items from school database...</p>
             </div>
         </section>
-
     </main>
-
+    
+    <!-- Footer -->
     <footer>
         <div class="container">
             <p>&copy; 2026 Grayslake Central High School. <br> Items not claimed within 30 days may be donated.</p>
@@ -532,249 +510,238 @@
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <!-- JavaScript code -->
     <script>
-        const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDSnZrlTsmMOUxMBVj3_2rtuFtXC88BsCTmlnCYjo2FW_1deVhXRwFEnEyCrVCKXphQg8UiJPSoRXg/pub?output=csv';
+        // This is our main program
+        // We're storing information about items in this array
+        let allItems = [];
+        let showingItems = [];
+        let currentTab = 'found';
+        let searchText = '';
         
-        const CONFIG = {
-            GOOGLE_SHEET_CSV_URL: GOOGLE_SHEET_URL,
-            COLUMN_MAPPING: {
-                timestamp: 'Timestamp',
-                status: 'Status',
-                itemName: 'Item Name',
-                location: 'Location',
-                date: 'Date',
-                contactEmail: 'Contact Email'
-            },
-            REFRESH_INTERVAL: 300000
-        };
-
-        let state = {
-            allItems: [],
-            displayedItems: [],
-            activeTab: 'found',
-            searchQuery: '',
-            lastUpdated: new Date()
-        };
-
-        const elements = {
-            itemsGrid: document.getElementById('items-grid'),
-            btnShowFound: document.getElementById('btn-show-found'),
-            btnShowLost: document.getElementById('btn-show-lost'),
-            searchInput: document.getElementById('search-input'),
-            resultsCounter: document.getElementById('results-counter'),
-            resultsCount: document.getElementById('results-count')
-        };
-
-        document.addEventListener('DOMContentLoaded', initApp);
-
-        async function initApp() {
-            setupEventListeners();
-            await loadData();
-            updateDisplay();
-            setupAutoRefresh();
-        }
-
-        function setupEventListeners() {
-            elements.btnShowFound.addEventListener('click', () => switchTab('found'));
-            elements.btnShowLost.addEventListener('click', () => switchTab('lost'));
-            
-            elements.searchInput.addEventListener('input', (e) => {
-                state.searchQuery = e.target.value.toLowerCase().trim();
+        // These are the parts of the webpage we'll be changing
+        const itemsContainer = document.getElementById('items-container');
+        const foundButton = document.getElementById('found-button');
+        const lostButton = document.getElementById('lost-button');
+        const searchBox = document.getElementById('search-box');
+        const resultsCounter = document.getElementById('results-counter');
+        const resultsCount = document.getElementById('results-count');
+        
+        // When the page loads, we start our program
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up click listeners for buttons
+            foundButton.addEventListener('click', function() {
+                currentTab = 'found';
+                updateActiveButton();
                 updateDisplay();
             });
             
-            let searchTimeout;
-            elements.searchInput.addEventListener('input', () => {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(() => {
-                    state.searchQuery = elements.searchInput.value.toLowerCase().trim();
-                    updateDisplay();
-                }, 300);
+            lostButton.addEventListener('click', function() {
+                currentTab = 'lost';
+                updateActiveButton();
+                updateDisplay();
             });
-        }
-
-        function switchTab(tab) {
-            if (state.activeTab === tab) return;
             
-            state.activeTab = tab;
+            // Set up search box listener
+            searchBox.addEventListener('input', function() {
+                searchText = this.value.toLowerCase().trim();
+                updateDisplay();
+            });
             
-            if (tab === 'found') {
-                elements.btnShowFound.classList.add('active');
-                elements.btnShowLost.classList.remove('active');
+            // Load data from Google Sheet
+            loadData();
+        });
+        
+        // Updates which tab button is highlighted
+        function updateActiveButton() {
+            if (currentTab === 'found') {
+                foundButton.classList.add('active');
+                lostButton.classList.remove('active');
             } else {
-                elements.btnShowLost.classList.add('active');
-                elements.btnShowFound.classList.remove('active');
+                lostButton.classList.add('active');
+                foundButton.classList.remove('active');
             }
-            
-            updateDisplay();
         }
-
+        
+        // Loads data from Google Sheets
         async function loadData() {
             try {
-                showLoading();
+                showLoadingMessage();
                 
-                const response = await fetch(CONFIG.GOOGLE_SHEET_CSV_URL);
+                // This is the URL to your Google Sheet CSV
+                // IMPORTANT: You need to publish your Google Sheet as CSV
+                // Go to File > Share > Publish to web > CSV > Publish
+                // Then copy the URL and paste it below
+                https://docs.google.com/spreadsheets/d/e/2PACX-1vRDSnZrlTsmMOUxMBVj3_2rtuFtXC88BsCTmlnCYjo2FW_1deVhXRwFEnEyCrVCKXphQg8UiJPSoRXg/pub?output=csv
+                
+                // Fetch the data from Google Sheets
+                const response = await fetch(googleSheetURL);
                 
                 if (!response.ok) {
-                    throw new Error(`Failed to fetch data: HTTP ${response.status}`);
+                    throw new Error('Could not load data');
                 }
                 
+                // Get the CSV text
                 const csvText = await response.text();
                 
+                // Check if we got actual data
                 if (csvText.includes('<!DOCTYPE html>')) {
-                    throw new Error('Unable to load data. Please ensure the Google Sheet is properly published.');
+                    throw new Error('Google Sheet not published correctly');
                 }
                 
-                const parsedData = Papa.parse(csvText, {
-                    header: true,
-                    skipEmptyLines: true,
-                    dynamicTyping: false
-                });
+                // Parse the CSV data
+                allItems = parseCSVData(csvText);
                 
-                state.allItems = processSheetData(parsedData.data);
-                state.lastUpdated = new Date();
+                // Update what we show on screen
+                updateDisplay();
                 
             } catch (error) {
-                console.error('Error loading from Google Sheet:', error);
-                showError('Unable to load items at this time. Please try again later.');
+                console.log('Error loading data:', error);
+                showErrorMessage('Could not load items. Please try again later.');
             }
         }
-
-        function processSheetData(rawData) {
-            const items = rawData.map((row, index) => {
-                const status = row[CONFIG.COLUMN_MAPPING.status] || row['Status'] || row['status'] || '';
-                const name = row[CONFIG.COLUMN_MAPPING.itemName] || row['Item Name'] || row['Item name'] || 'Unnamed Item';
-                const location = row[CONFIG.COLUMN_MAPPING.location] || row['Location'] || row['location'] || 'Not specified';
-                const date = row[CONFIG.COLUMN_MAPPING.date] || row['Date'] || row['date'] || row[CONFIG.COLUMN_MAPPING.timestamp] || '';
-                const contactEmail = row[CONFIG.COLUMN_MAPPING.contactEmail] || row['Contact Email'] || row['Contact email'] || '';
-                const timestamp = row[CONFIG.COLUMN_MAPPING.timestamp] || row['Timestamp'] || row['timestamp'] || new Date().toISOString();
+        
+        // Takes CSV text and turns it into an array of items
+        function parseCSVData(csvText) {
+            const items = [];
+            const lines = csvText.split('\n');
+            
+            // Skip the first line (headers)
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line) continue;
                 
+                // Split the CSV line into parts
+                // This is a simple CSV parser - Google Sheets CSV format is simple
+                const parts = line.split(',');
+                
+                // Create an item object
+                // Make sure your Google Sheet has these columns in order:
+                // Timestamp, Status, Item Name, Location, Date, Contact Email
                 const item = {
-                    id: index + 1,
-                    status: status.toLowerCase().includes('found') ? 'found' : 'lost',
-                    name: name,
-                    location: location,
-                    date: formatDate(date),
-                    contactEmail: contactEmail,
-                    timestamp: timestamp,
-                    itemType: inferItemType(name),
-                    rawStatus: status
+                    id: i,
+                    status: parts[1] ? (parts[1].toLowerCase().includes('found') ? 'found' : 'lost') : 'found',
+                    name: parts[2] || 'Unnamed Item',
+                    location: parts[3] || 'Not specified',
+                    date: formatDate(parts[4] || parts[0]),
+                    contactEmail: parts[5] || '',
+                    timestamp: parts[0] || new Date().toISOString()
                 };
                 
-                return item;
-            }).filter(item => item.name && item.name !== 'Unnamed Item');
+                // Only add if it has a name
+                if (item.name && item.name !== 'Unnamed Item') {
+                    items.push(item);
+                }
+            }
             
-            items.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            // Sort by newest first
+            items.sort(function(a, b) {
+                return new Date(b.timestamp) - new Date(a.timestamp);
+            });
             
             return items;
         }
-
-        function inferItemType(itemName) {
-            const name = itemName.toLowerCase();
-            
-            const categories = {
-                electronics: ['phone', 'laptop', 'tablet', 'charger', 'headphone', 'earbud', 'calculator', 'watch', 'earbuds', 'airpods'],
-                clothing: ['jacket', 'hoodie', 'sweater', 'shirt', 'pants', 'hat', 'cap', 'glove', 'scarf', 'uniform', 't-shirt', 'sweatshirt'],
-                accessories: ['wallet', 'keys', 'water bottle', 'bag', 'backpack', 'lunchbox', 'bracelet', 'necklace', 'bottle', 'keychain'],
-                school: ['book', 'binder', 'notebook', 'folder', 'pen', 'pencil', 'planner', 'textbook', 'id card', 'calculator', 'notebook'],
-                sports: ['jersey', 'cleats', 'ball', 'goggles', 'helmet', 'glove', 'racket', 'basketball', 'football', 'soccer']
-            };
-            
-            for (const [category, keywords] of Object.entries(categories)) {
-                if (keywords.some(keyword => name.includes(keyword))) {
-                    return category;
-                }
-            }
-            
-            return 'other';
-        }
-
-        function getItemIcon(itemType) {
-            const iconMap = {
-                electronics: 'fa-solid fa-mobile-screen',
-                clothing: 'fa-solid fa-shirt',
-                accessories: 'fa-solid fa-bag-shopping',
-                school: 'fa-solid fa-book',
-                sports: 'fa-solid fa-baseball-bat-ball',
-                other: 'fa-solid fa-box'
-            };
-            
-            return iconMap[itemType] || iconMap.other;
-        }
-
+        
+        // Updates what's shown on screen
         function updateDisplay() {
-            let filteredItems = state.allItems.filter(item => {
-                if (state.activeTab === 'found' && item.status !== 'found') return false;
-                if (state.activeTab === 'lost' && item.status !== 'lost') return false;
+            // First, filter items based on current tab and search
+            showingItems = allItems.filter(function(item) {
+                // Check if it matches the current tab
+                if (currentTab === 'found' && item.status !== 'found') return false;
+                if (currentTab === 'lost' && item.status !== 'lost') return false;
                 
-                if (state.searchQuery) {
-                    const searchText = `
-                        ${item.name} 
-                        ${item.location} 
-                        ${item.itemType}
-                    `.toLowerCase();
-                    return searchText.includes(state.searchQuery.toLowerCase());
+                // Check if it matches search text
+                if (searchText) {
+                    const searchableText = (item.name + ' ' + item.location).toLowerCase();
+                    return searchableText.includes(searchText);
                 }
                 
                 return true;
             });
             
-            state.displayedItems = filteredItems;
+            // Update the results counter
+            updateResultsCounter(showingItems.length);
             
-            updateResultsCounter(filteredItems.length);
-            
+            // Display the items
             renderItems();
         }
-
+        
+        // Shows how many items we found
         function updateResultsCounter(count) {
-            if (elements.resultsCounter && elements.resultsCount) {
-                elements.resultsCount.textContent = count;
-                elements.resultsCounter.style.display = 'block';
-                
-                const tabName = state.activeTab === 'found' ? 'found' : 'lost';
-                elements.resultsCounter.textContent = `${count} ${tabName} item${count !== 1 ? 's' : ''}`;
+            if (count > 0) {
+                resultsCounter.style.display = 'block';
+                resultsCount.textContent = count;
+                resultsCounter.innerHTML = count + ' ' + (currentTab === 'found' ? 'found' : 'lost') + ' item' + (count !== 1 ? 's' : '') + ' found';
+            } else {
+                resultsCounter.style.display = 'none';
             }
         }
-
+        
+        // Creates the HTML for items and puts it on the page
         function renderItems() {
-            if (state.displayedItems.length === 0) {
-                showEmptyState();
+            if (showingItems.length === 0) {
+                showNoItemsMessage();
                 return;
             }
             
-            const itemsHTML = state.displayedItems
-                .map(item => createItemCard(item))
-                .join('');
+            let itemsHTML = '';
             
-            elements.itemsGrid.innerHTML = itemsHTML;
+            // Create HTML for each item
+            for (let i = 0; i < showingItems.length; i++) {
+                const item = showingItems[i];
+                itemsHTML += createItemCard(item);
+            }
             
-            document.querySelectorAll('.contact-btn:not(.disabled)').forEach(button => {
+            // Put the HTML on the page
+            itemsContainer.innerHTML = itemsHTML;
+            
+            // Add click events to contact buttons
+            document.querySelectorAll('.contact-button:not(.disabled)').forEach(function(button) {
                 button.addEventListener('click', function() {
                     const email = this.getAttribute('data-email');
                     if (email) {
-                        window.location.href = `mailto:${email}?subject=GCHS%20Lost%20%26%20Found%20Inquiry&body=Hello,%20I%20am%20inquiring%20about%20the%20item%20you%20reported%20on%20the%20GCHS%20Lost%20%26%20Found%20website.`;
+                        // Open email program to contact the person
+                        window.location.href = 'mailto:' + email + '?subject=GCHS Lost & Found Inquiry';
                     }
                 });
             });
         }
-
+        
+        // Creates HTML for one item card
         function createItemCard(item) {
-            const statusClass = item.status === 'found' ? 'type-found' : 'type-lost';
+            // Determine the status badge
+            const statusClass = item.status === 'found' ? 'status-found' : 'status-lost';
             const statusText = item.status === 'found' ? 'FOUND' : 'LOST';
-            const iconClass = getItemIcon(item.itemType);
             
+            // Determine the icon based on item type
+            const iconClass = getItemIcon(item.name);
+            
+            // Create the contact button HTML
+            let contactButtonHTML = '';
+            if (item.contactEmail) {
+                contactButtonHTML = `
+                    <button class="contact-button" data-email="${escapeHTML(item.contactEmail)}">
+                        <i class="fas fa-envelope"></i> Contact Reporter
+                    </button>
+                `;
+            } else {
+                contactButtonHTML = `
+                    <button class="contact-button disabled" disabled>
+                        <i class="fas fa-envelope"></i> No Contact Info
+                    </button>
+                `;
+            }
+            
+            // Create the full card HTML
             return `
                 <div class="item-card">
                     <div class="item-image">
-                        <div class="default-image">
-                            <i class="${iconClass}"></i>
-                        </div>
+                        <i class="${iconClass}"></i>
                     </div>
                     <div class="item-content">
                         <div class="item-header">
                             <h3 class="item-title">${escapeHTML(item.name)}</h3>
-                            <span class="item-type ${statusClass}">${statusText}</span>
+                            <span class="item-status ${statusClass}">${statusText}</span>
                         </div>
                         
                         <div class="item-details">
@@ -787,95 +754,52 @@
                                 <i class="fas fa-calendar-day"></i>
                                 <span><strong>Date:</strong> ${item.date}</span>
                             </div>
-                            
-                            <div class="detail-row">
-                                <i class="fas fa-tag"></i>
-                                <span><strong>Type:</strong> ${item.itemType.charAt(0).toUpperCase() + item.itemType.slice(1)}</span>
-                            </div>
                         </div>
                         
-                        <div class="item-actions">
-                            ${item.contactEmail ? `
-                                <button class="contact-btn" data-email="${escapeHTML(item.contactEmail)}">
-                                    <i class="fas fa-envelope"></i> Contact Reporter
-                                </button>
-                            ` : `
-                                <button class="contact-btn disabled" disabled>
-                                    <i class="fas fa-envelope"></i> No Contact Info
-                                </button>
-                            `}
-                        </div>
+                        ${contactButtonHTML}
                         
                         <div class="item-date">
                             <i class="far fa-calendar"></i>
-                            <span>Reported: ${formatTimestamp(item.timestamp)}</span>
+                            <span>Reported: ${formatTimeAgo(item.timestamp)}</span>
                         </div>
                     </div>
                 </div>
             `;
         }
-
-        function showLoading() {
-            elements.itemsGrid.innerHTML = `
-                <div class="loading">
-                    <i class="fa-solid fa-circle-notch fa-spin"></i>
-                    <p>Loading lost and found items...</p>
-                </div>
-            `;
-        }
-
-        function showEmptyState() {
-            const message = state.searchQuery 
-                ? `No ${state.activeTab} items match your search. Try different keywords.`
-                : `No ${state.activeTab} items have been reported yet.`;
+        
+        // Gets an appropriate icon for an item based on its name
+        function getItemIcon(itemName) {
+            const name = itemName.toLowerCase();
             
-            const icon = state.activeTab === 'found' 
-                ? 'fa-solid fa-search'
-                : 'fa-solid fa-question-circle';
-            
-            elements.itemsGrid.innerHTML = `
-                <div class="empty-state">
-                    <i class="${icon}"></i>
-                    <h3>No ${state.activeTab === 'found' ? 'Found' : 'Lost'} Items</h3>
-                    <p>${message}</p>
-                    ${!state.searchQuery ? `<p>Check back soon or report a new item.</p>` : ''}
-                </div>
-            `;
-            
-            if (elements.resultsCounter) {
-                elements.resultsCounter.style.display = 'none';
+            if (name.includes('phone') || name.includes('laptop') || name.includes('calculator') || name.includes('earbud')) {
+                return 'fa-solid fa-mobile-screen';
+            } else if (name.includes('jacket') || name.includes('hoodie') || name.includes('shirt') || name.includes('hat')) {
+                return 'fa-solid fa-shirt';
+            } else if (name.includes('book') || name.includes('notebook') || name.includes('binder') || name.includes('textbook')) {
+                return 'fa-solid fa-book';
+            } else if (name.includes('water bottle') || name.includes('bag') || name.includes('backpack') || name.includes('lunchbox')) {
+                return 'fa-solid fa-bag-shopping';
+            } else if (name.includes('ball') || name.includes('jersey') || name.includes('cleats') || name.includes('helmet')) {
+                return 'fa-solid fa-baseball-bat-ball';
+            } else {
+                return 'fa-solid fa-box';
             }
         }
-
-        function showError(message) {
-            elements.itemsGrid.innerHTML = `
-                <div class="empty-state">
-                    <i class="fa-solid fa-exclamation-triangle"></i>
-                    <h3>Unable to Load Data</h3>
-                    <p>${message}</p>
-                    <p>Please try refreshing the page or check your connection.</p>
-                </div>
-            `;
-            
-            if (elements.resultsCounter) {
-                elements.resultsCounter.style.display = 'none';
-            }
-        }
-
+        
+        // Formats a date string to look nice
         function formatDate(dateString) {
             try {
-                let date = new Date(dateString);
+                const date = new Date(dateString);
                 if (isNaN(date.getTime())) {
+                    // Try to parse as MM/DD/YYYY
                     const parts = dateString.split('/');
                     if (parts.length === 3) {
-                        date = new Date(parts[2], parts[0] - 1, parts[1]);
-                    } else {
-                        date = new Date(dateString.replace(/(\d+)\/(\d+)\/(\d+)/, '$2/$1/$3'));
+                        return parts[0] + '/' + parts[1] + '/' + parts[2];
                     }
+                    return 'Date not specified';
                 }
                 
-                if (isNaN(date.getTime())) return 'Date not specified';
-                
+                // Format as Month Day, Year (e.g., Mar 20, 2024)
                 return date.toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'short',
@@ -885,43 +809,80 @@
                 return 'Date not specified';
             }
         }
-
-        function formatTimestamp(timestamp) {
+        
+        // Shows how long ago something was reported
+        function formatTimeAgo(timestamp) {
             try {
                 const date = new Date(timestamp);
-                if (isNaN(date.getTime())) return 'Recent';
+                if (isNaN(date.getTime())) return 'Recently';
                 
                 const now = new Date();
-                const diffTime = Math.abs(now - date);
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                const diffMs = now - date;
+                const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
                 
+                if (diffDays === 0) return 'Today';
                 if (diffDays === 1) return 'Yesterday';
-                if (diffDays < 7) return `${diffDays} days ago`;
-                if (diffDays < 30) return `${Math.floor(diffDays/7)} weeks ago`;
+                if (diffDays < 7) return diffDays + ' days ago';
+                if (diffDays < 30) return Math.floor(diffDays / 7) + ' weeks ago';
                 
-                return date.toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: 'numeric'
-                });
+                return formatDate(timestamp);
             } catch (error) {
-                return 'Recent';
+                return 'Recently';
             }
         }
-
-        function setupAutoRefresh() {
-            setInterval(async () => {
-                await loadData();
-            }, CONFIG.REFRESH_INTERVAL);
+        
+        // Shows loading message
+        function showLoadingMessage() {
+            itemsContainer.innerHTML = `
+                <div class="loading-state">
+                    <i class="fa-solid fa-circle-notch fa-spin"></i>
+                    <p>Loading items from school database...</p>
+                </div>
+            `;
+            resultsCounter.style.display = 'none';
         }
-
+        
+        // Shows message when no items are found
+        function showNoItemsMessage() {
+            const message = searchText 
+                ? 'No items match your search. Try different keywords.'
+                : 'No ' + (currentTab === 'found' ? 'found' : 'lost') + ' items have been reported yet.';
+            
+            const icon = currentTab === 'found' ? 'fa-solid fa-search' : 'fa-solid fa-question-circle';
+            
+            itemsContainer.innerHTML = `
+                <div class="empty-state">
+                    <i class="${icon}"></i>
+                    <h3>No ${currentTab === 'found' ? 'Found' : 'Lost'} Items</h3>
+                    <p>${message}</p>
+                </div>
+            `;
+            resultsCounter.style.display = 'none';
+        }
+        
+        // Shows error message
+        function showErrorMessage(message) {
+            itemsContainer.innerHTML = `
+                <div class="empty-state">
+                    <i class="fa-solid fa-exclamation-triangle"></i>
+                    <h3>Unable to Load Data</h3>
+                    <p>${message}</p>
+                    <p>Please try refreshing the page.</p>
+                </div>
+            `;
+            resultsCounter.style.display = 'none';
+        }
+        
+        // Makes text safe to put in HTML (prevents security issues)
         function escapeHTML(text) {
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
-
-        window.refreshData = async function() {
-            await loadData();
+        
+        // Manual refresh function (for debugging)
+        window.refreshData = function() {
+            loadData();
         };
     </script>
 </body>
