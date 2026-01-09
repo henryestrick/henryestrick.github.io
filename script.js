@@ -1,12 +1,14 @@
 // Configuration
 const CONFIG = {
-    GOOGLE_SHEET_CSV_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDSnZrlTsmMOUxMBVj3_2rtuFtXC88BsCTmlnCYjo2FW_1deVhXRwFEnEyCrVCKXphQg8UiJPSoRXg/pub?output=csv',
+    // Google Sheet CSV URL (PUBLISH TO WEB AS CSV and paste the URL here)
+    // Instructions: Open your Google Sheet -> File -> Share -> Publish to web -> CSV -> Copy URL
+    GOOGLE_SHEET_CSV_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ.../pub?output=csv',
     
     // Column mapping from Google Sheet to display fields
     // Updated to match your Google Form response columns
     COLUMN_MAPPING: {
         timestamp: 'Timestamp',
-        status: 'Status',  
+        status: 'Status',  // This should contain "Lost" or "Found"
         itemName: 'Item Name',
         location: 'Location',
         date: 'Date',
@@ -96,8 +98,10 @@ async function loadData() {
         showLoading();
         
         // Fetch CSV data
+        console.log('Fetching data from:', CONFIG.GOOGLE_SHEET_CSV_URL);
         const response = await fetch(CONFIG.GOOGLE_SHEET_CSV_URL);
         const csvText = await response.text();
+        console.log('Raw CSV text (first 500 chars):', csvText.substring(0, 500));
         
         // Parse CSV
         const parsedData = Papa.parse(csvText, {
@@ -105,10 +109,13 @@ async function loadData() {
             skipEmptyLines: true
         });
         
+        console.log('Parsed data:', parsedData);
+        
         // Process and store data
         state.allItems = processSheetData(parsedData.data);
         
         console.log(`Loaded ${state.allItems.length} items from Google Sheet`);
+        console.log('Sample item:', state.allItems[0]);
         
     } catch (error) {
         console.error('Error loading data from Google Sheet:', error);
@@ -118,7 +125,12 @@ async function loadData() {
 
 // Process raw sheet data into usable format
 function processSheetData(rawData) {
+    console.log('Processing raw data:', rawData);
+    
     return rawData.map((row, index) => {
+        // Log each row to see the structure
+        console.log(`Row ${index}:`, row);
+        
         // Map sheet columns to our application fields
         const item = {
             id: index + 1,
@@ -205,6 +217,8 @@ function updateDisplay() {
         
         return true;
     });
+    
+    console.log(`Displaying ${state.displayedItems.length} items after filtering.`);
     
     // Render items
     renderItems();
