@@ -1,14 +1,12 @@
 // Configuration
 const CONFIG = {
-    // Google Sheet CSV URL (PUBLISH TO WEB AS CSV and paste the URL here)
-    // Instructions: Open your Google Sheet -> File -> Share -> Publish to web -> CSV -> Copy URL
     GOOGLE_SHEET_CSV_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDSnZrlTsmMOUxMBVj3_2rtuFtXC88BsCTmlnCYjo2FW_1deVhXRwFEnEyCrVCKXphQg8UiJPSoRXg/pub?output=csv',
     
     // Column mapping from Google Sheet to display fields
     // Updated to match your Google Form response columns
     COLUMN_MAPPING: {
         timestamp: 'Timestamp',
-        status: 'Status',  // This should contain "Lost" or "Found"
+        status: 'Status',  
         itemName: 'Item Name',
         location: 'Location',
         date: 'Date',
