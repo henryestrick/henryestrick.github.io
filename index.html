@@ -4,22 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GCHS Lost & Found</title>
-    
-    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
     <style>
-        /* Basic reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
-        /* School colors */
         :root {
             --school-green: #277445;
             --school-white: #ffffff;
@@ -39,7 +32,6 @@
             flex-direction: column;
         }
         
-        /* Container for centering content */
         .container {
             width: 100%;
             max-width: 1200px;
@@ -47,7 +39,6 @@
             padding: 0 20px;
         }
         
-        /* Header styles */
         header {
             background-color: var(--school-green);
             color: var(--school-white);
@@ -73,13 +64,11 @@
             opacity: 0.9;
         }
         
-        /* Main content area */
         main {
             flex: 1;
             padding: 30px 0 60px;
         }
         
-        /* Button styles */
         .button-group {
             display: flex;
             justify-content: space-between;
@@ -140,7 +129,6 @@
             box-shadow: 0 6px 16px rgba(39, 116, 69, 0.25);
         }
         
-        /* Search box */
         .search-container {
             margin-bottom: 30px;
         }
@@ -175,7 +163,6 @@
             box-shadow: 0 4px 12px rgba(39, 116, 69, 0.15);
         }
         
-        /* Items grid */
         .items-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -183,7 +170,6 @@
             margin-bottom: 40px;
         }
         
-        /* Item card */
         .item-card {
             background-color: var(--school-white);
             border-radius: 8px;
@@ -293,7 +279,6 @@
             color: #666;
         }
         
-        /* Contact button */
         .contact-button {
             width: 100%;
             padding: 12px;
@@ -328,7 +313,6 @@
             transform: none;
         }
         
-        /* Loading and empty states */
         .loading-state {
             grid-column: 1 / -1;
             text-align: center;
@@ -365,7 +349,6 @@
             color: var(--dark-gray);
         }
         
-        /* Footer */
         footer {
             background-color: var(--school-green);
             color: var(--school-white);
@@ -392,7 +375,6 @@
             color: var(--school-white);
         }
         
-        /* Count display */
         .count-display {
             background-color: rgba(39, 116, 69, 0.1);
             border-left: 4px solid var(--school-green);
@@ -403,7 +385,6 @@
             color: var(--school-green);
         }
         
-        /* Responsive design */
         @media (max-width: 768px) {
             .button-group {
                 flex-direction: column;
@@ -449,7 +430,6 @@
     </style>
 </head>
 <body>
-    <!-- Header section -->
     <header>
         <div class="container">
             <div class="header-content">
@@ -459,21 +439,17 @@
         </div>
     </header>
     
-    <!-- Main content -->
     <main class="container">
-        <!-- Results counter -->
         <div id="results-counter" class="count-display" style="display: none;">
             <span id="results-count">0</span> items found
         </div>
         
-        <!-- Button controls -->
         <section class="button-group">
             <div class="tab-buttons">
                 <button id="found-button" class="tab-button active">Found Items</button>
                 <button id="lost-button" class="tab-button">Lost Reports</button>
             </div>
             
-            <!-- Report button links to Google Form -->
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTKmK0SaP7cG-mcV9KjuQBXZGPMMlYVHKIGRFOoaALAjMWQw/viewform" target="_blank">
                 <button class="report-button">
                     <i class="fa-solid fa-plus"></i> Report an Item
@@ -481,7 +457,6 @@
             </a>
         </section>
         
-        <!-- Search box -->
         <section class="search-container">
             <div class="search-box">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -489,7 +464,6 @@
             </div>
         </section>
         
-        <!-- Items will appear here -->
         <section id="items-container" class="items-grid">
             <div class="loading-state">
                 <i class="fa-solid fa-circle-notch fa-spin"></i>
@@ -498,7 +472,6 @@
         </section>
     </main>
     
-    <!-- Footer -->
     <footer>
         <div class="container">
             <p>&copy; 2026 Grayslake Central High School. <br> Items not claimed within 30 days may be donated.</p>
@@ -510,16 +483,12 @@
         </div>
     </footer>
 
-    <!-- JavaScript code -->
     <script>
-        // This is our main program
-        // We're storing information about items in this array
         let allItems = [];
         let showingItems = [];
         let currentTab = 'found';
         let searchText = '';
         
-        // These are the parts of the webpage we'll be changing
         const itemsContainer = document.getElementById('items-container');
         const foundButton = document.getElementById('found-button');
         const lostButton = document.getElementById('lost-button');
@@ -527,9 +496,7 @@
         const resultsCounter = document.getElementById('results-counter');
         const resultsCount = document.getElementById('results-count');
         
-        // When the page loads, we start our program
         document.addEventListener('DOMContentLoaded', function() {
-            // Set up click listeners for buttons
             foundButton.addEventListener('click', function() {
                 currentTab = 'found';
                 updateActiveButton();
@@ -542,17 +509,14 @@
                 updateDisplay();
             });
             
-            // Set up search box listener
             searchBox.addEventListener('input', function() {
                 searchText = this.value.toLowerCase().trim();
                 updateDisplay();
             });
             
-            // Load data from Google Sheet
             loadData();
         });
         
-        // Updates which tab button is highlighted
         function updateActiveButton() {
             if (currentTab === 'found') {
                 foundButton.classList.add('active');
@@ -563,36 +527,26 @@
             }
         }
         
-        // Loads data from Google Sheets
         async function loadData() {
             try {
                 showLoadingMessage();
                 
-                // This is the URL to your Google Sheet CSV
-                // IMPORTANT: You need to publish your Google Sheet as CSV
-                // Go to File > Share > Publish to web > CSV > Publish
-                // Then copy the URL and paste it below
-                https://docs.google.com/spreadsheets/d/e/2PACX-1vRDSnZrlTsmMOUxMBVj3_2rtuFtXC88BsCTmlnCYjo2FW_1deVhXRwFEnEyCrVCKXphQg8UiJPSoRXg/pub?output=csv
+                const googleSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDSnZrlTsmMOUxMBVj3_2rtuFtXC88BsCTmlnCYjo2FW_1deVhXRwFEnEyCrVCKXphQg8UiJPSoRXg/pub?output=csv';
                 
-                // Fetch the data from Google Sheets
                 const response = await fetch(googleSheetURL);
                 
                 if (!response.ok) {
                     throw new Error('Could not load data');
                 }
                 
-                // Get the CSV text
                 const csvText = await response.text();
                 
-                // Check if we got actual data
                 if (csvText.includes('<!DOCTYPE html>')) {
                     throw new Error('Google Sheet not published correctly');
                 }
                 
-                // Parse the CSV data
                 allItems = parseCSVData(csvText);
                 
-                // Update what we show on screen
                 updateDisplay();
                 
             } catch (error) {
@@ -601,23 +555,16 @@
             }
         }
         
-        // Takes CSV text and turns it into an array of items
         function parseCSVData(csvText) {
             const items = [];
             const lines = csvText.split('\n');
             
-            // Skip the first line (headers)
             for (let i = 1; i < lines.length; i++) {
                 const line = lines[i].trim();
                 if (!line) continue;
                 
-                // Split the CSV line into parts
-                // This is a simple CSV parser - Google Sheets CSV format is simple
                 const parts = line.split(',');
                 
-                // Create an item object
-                // Make sure your Google Sheet has these columns in order:
-                // Timestamp, Status, Item Name, Location, Date, Contact Email
                 const item = {
                     id: i,
                     status: parts[1] ? (parts[1].toLowerCase().includes('found') ? 'found' : 'lost') : 'found',
@@ -628,13 +575,11 @@
                     timestamp: parts[0] || new Date().toISOString()
                 };
                 
-                // Only add if it has a name
                 if (item.name && item.name !== 'Unnamed Item') {
                     items.push(item);
                 }
             }
             
-            // Sort by newest first
             items.sort(function(a, b) {
                 return new Date(b.timestamp) - new Date(a.timestamp);
             });
@@ -642,15 +587,11 @@
             return items;
         }
         
-        // Updates what's shown on screen
         function updateDisplay() {
-            // First, filter items based on current tab and search
             showingItems = allItems.filter(function(item) {
-                // Check if it matches the current tab
                 if (currentTab === 'found' && item.status !== 'found') return false;
                 if (currentTab === 'lost' && item.status !== 'lost') return false;
                 
-                // Check if it matches search text
                 if (searchText) {
                     const searchableText = (item.name + ' ' + item.location).toLowerCase();
                     return searchableText.includes(searchText);
@@ -659,14 +600,11 @@
                 return true;
             });
             
-            // Update the results counter
             updateResultsCounter(showingItems.length);
             
-            // Display the items
             renderItems();
         }
         
-        // Shows how many items we found
         function updateResultsCounter(count) {
             if (count > 0) {
                 resultsCounter.style.display = 'block';
@@ -677,7 +615,6 @@
             }
         }
         
-        // Creates the HTML for items and puts it on the page
         function renderItems() {
             if (showingItems.length === 0) {
                 showNoItemsMessage();
@@ -686,37 +623,29 @@
             
             let itemsHTML = '';
             
-            // Create HTML for each item
             for (let i = 0; i < showingItems.length; i++) {
                 const item = showingItems[i];
                 itemsHTML += createItemCard(item);
             }
             
-            // Put the HTML on the page
             itemsContainer.innerHTML = itemsHTML;
             
-            // Add click events to contact buttons
             document.querySelectorAll('.contact-button:not(.disabled)').forEach(function(button) {
                 button.addEventListener('click', function() {
                     const email = this.getAttribute('data-email');
                     if (email) {
-                        // Open email program to contact the person
                         window.location.href = 'mailto:' + email + '?subject=GCHS Lost & Found Inquiry';
                     }
                 });
             });
         }
         
-        // Creates HTML for one item card
         function createItemCard(item) {
-            // Determine the status badge
             const statusClass = item.status === 'found' ? 'status-found' : 'status-lost';
             const statusText = item.status === 'found' ? 'FOUND' : 'LOST';
             
-            // Determine the icon based on item type
             const iconClass = getItemIcon(item.name);
             
-            // Create the contact button HTML
             let contactButtonHTML = '';
             if (item.contactEmail) {
                 contactButtonHTML = `
@@ -732,7 +661,6 @@
                 `;
             }
             
-            // Create the full card HTML
             return `
                 <div class="item-card">
                     <div class="item-image">
@@ -767,7 +695,6 @@
             `;
         }
         
-        // Gets an appropriate icon for an item based on its name
         function getItemIcon(itemName) {
             const name = itemName.toLowerCase();
             
@@ -786,12 +713,10 @@
             }
         }
         
-        // Formats a date string to look nice
         function formatDate(dateString) {
             try {
                 const date = new Date(dateString);
                 if (isNaN(date.getTime())) {
-                    // Try to parse as MM/DD/YYYY
                     const parts = dateString.split('/');
                     if (parts.length === 3) {
                         return parts[0] + '/' + parts[1] + '/' + parts[2];
@@ -799,7 +724,6 @@
                     return 'Date not specified';
                 }
                 
-                // Format as Month Day, Year (e.g., Mar 20, 2024)
                 return date.toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'short',
@@ -810,7 +734,6 @@
             }
         }
         
-        // Shows how long ago something was reported
         function formatTimeAgo(timestamp) {
             try {
                 const date = new Date(timestamp);
@@ -831,7 +754,6 @@
             }
         }
         
-        // Shows loading message
         function showLoadingMessage() {
             itemsContainer.innerHTML = `
                 <div class="loading-state">
@@ -842,7 +764,6 @@
             resultsCounter.style.display = 'none';
         }
         
-        // Shows message when no items are found
         function showNoItemsMessage() {
             const message = searchText 
                 ? 'No items match your search. Try different keywords.'
@@ -860,7 +781,6 @@
             resultsCounter.style.display = 'none';
         }
         
-        // Shows error message
         function showErrorMessage(message) {
             itemsContainer.innerHTML = `
                 <div class="empty-state">
@@ -873,14 +793,12 @@
             resultsCounter.style.display = 'none';
         }
         
-        // Makes text safe to put in HTML (prevents security issues)
         function escapeHTML(text) {
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
         
-        // Manual refresh function (for debugging)
         window.refreshData = function() {
             loadData();
         };
